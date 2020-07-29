@@ -1,0 +1,30 @@
+create table acctrans ( accno int, trtype varchar(10), trdate datetime not null, amt float ); 
+ 
+ 
+DELIMITER // 
+ 
+create trigger transact after insert on acctrans for each row begin if new.trtype='deposit' then update accounts set balance=balance+new.amt where  accounts.accno=new.accno; end if; if new.trtype='withdraw' then update accounts set balance=balance-new.amt where  accounts.accno=new.accno; end if; END// 
+ 
+DELIMITER ; 
+TEST IT USING: insert into acctrans values(1003,'deposit',Now(),1200); 
+
+DELIMITER // 
+ 
+create trigger transact after insert on acctrans for each row begin if new.trtype='deposit' then update accounts set balance=balance+new.amt where  accounts.accno=new.accno; end if; if new.trtype='withdraw' then update accounts set balance=balance-new.amt where  accounts.accno=new.accno; end if; END// 
+ 
+DELIMITER ; 
+DELIMITER // 
+ 
+CREATE PROCEDURE trans1 (sacc int,dacc int,amt float) BEGIN declare tot float; select balance-amt into tot from accounts where accno=sacc; 
+ 
+if tot>=0 then update accounts set balance=balance-amt where accno=sacc; update accounts set balance=balance+amt where accno=dacc; end if; END// 
+ 
+DELIMITER ;
+
+DELIMITER // 
+ 
+CREATE PROCEDURE trans1 (sacc int,dacc int,amt float) BEGIN declare tot float; select balance-amt into tot from users where noid=sacc; 
+ 
+if tot>=0 then update accounts set balance=balance-amt where noid=sacc; update accounts set balance=balance+amt where noid=dacc; end if; END// 
+ 
+DELIMITER 

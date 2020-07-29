@@ -1,0 +1,116 @@
+mysql> create database unobankingdb;
+
+mysql> use unobankingdb;
+
+mysql> create table Users(name varchar(100), gender varchar(7),dob varchar(12),  email varchar(90) , phone varchar(13) primary key,aadhar varchar(14), noid int auto_increment unique, status varchar(12) DEFAULT 'active', desig varchar(12),passw varchar(30), balance int);
+
+
+
+mysql> insert into Users values ('Riyaz Sayyad','Male','17/12/1999','code3alphadown@gmail.com',7620386192,56698248855,default,default,'Manager','R1212');
+
+mysql> ALTER TABLE users ADD balance int;
+Query OK, 0 rows affected (6.94 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from users;
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| name         | gender | dob        | email                    | phone      | aadhar      | noid | status | desig   | passw | balance |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| Airtel       | trans  | 2020-07-26 | Airtel@gmail.com         | 00000000   | 0000000     |   58 | active | cust    | 0000  |    NULL |
+| Airtel       | male   | 2020-07-27 | airtel@gmail.com         | 000000000  | 00000000    |   64 | active | cust    | 0000  |    NULL |
+| Riyaz Sayyad | Male   | 17/12/1999 | code3alphadown@gmail.com | 7620386192 | 56698248855 |   57 | active | Manager | R1212 |    NULL |
+| Anita        | female | 1997-06-05 | anita@gmail.com          | 8855667744 | 8855667744  |   66 | active | cashier | Anita |    NULL |
+| Sujay Dhawak | male   | 1999-07-15 | sujay@gmail.com          | 9875364782 | 9875364782  |   67 | active | cust    | Sujay |    NULL |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update users set balance=50000 where noid=67;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update users set balance=50000 where noid=58;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set balance=250000 where noid=64;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set balance=250000 where noid=66;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set balance=250000 where noid=58;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from users;
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| name         | gender | dob        | email                    | phone      | aadhar      | noid | status | desig   | passw | balance |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| Airtel       | trans  | 2020-07-26 | Airtel@gmail.com         | 00000000   | 0000000     |   58 | active | cust    | 0000  |  250000 |
+| Airtel       | male   | 2020-07-27 | airtel@gmail.com         | 000000000  | 00000000    |   64 | active | cust    | 0000  |  250000 |
+| Riyaz Sayyad | Male   | 17/12/1999 | code3alphadown@gmail.com | 7620386192 | 56698248855 |   57 | active | Manager | R1212 |    NULL |
+| Anita        | female | 1997-06-05 | anita@gmail.com          | 8855667744 | 8855667744  |   66 | active | cashier | Anita |  250000 |
+| Sujay Dhawak | male   | 1999-07-15 | sujay@gmail.com          | 9875364782 | 9875364782  |   67 | active | cust    | Sujay |   50000 |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+5 rows in set (0.02 sec)
+mysql> create table acctrans ( accno int, trtype varchar(10), trdate datetime not null, amt float );
+Query OK, 0 rows affected (4.43 sec)
+
+mysql> DELIMITER //
+mysql> create trigger transact after insert on acctrans for each row begin if new.trtype='deposit' then update users set balance=balance+new.amt where  users.noid=new.accno; end if; if new.trtype='withdraw' then update users set balance=balance-new.amt where  users.noid=new.accno; end if; END//
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> DELIMITER ;
+mysql> insert into acctrans values(67,'withdraw',Now(),1200);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into acctrans values(67,'deposit',Now(),12000);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from acctrans where accno=67;
++-------+----------+---------------------+-------+
+| accno | trtype   | trdate              | amt   |
++-------+----------+---------------------+-------+
+|    67 | withdraw | 2020-07-28 12:18:49 |  1200 |
+|    67 | deposit  | 2020-07-28 12:19:19 | 12000 |
++-------+----------+---------------------+-------+
+2 rows in set (0.00 sec)
+mysql> select * from users;
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| name         | gender | dob        | email                    | phone      | aadhar      | noid | status | desig   | passw | balance |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| Airtel       | trans  | 2020-07-26 | Airtel@gmail.com         | 00000000   | 0000000     |   58 | active | cust    | 0000  |  250000 |
+| Airtel       | male   | 2020-07-27 | airtel@gmail.com         | 000000000  | 00000000    |   64 | active | cust    | 0000  |  250000 |
+| Riyaz Sayyad | Male   | 17/12/1999 | code3alphadown@gmail.com | 7620386192 | 56698248855 |   57 | active | Manager | R1212 |    NULL |
+| Anita        | female | 1997-06-05 | anita@gmail.com          | 8855667744 | 8855667744  |   66 | active | cashier | Anita |  250000 |
+| Sujay Dhawak | male   | 1999-07-15 | sujay@gmail.com          | 9875364782 | 9875364782  |   67 | active | cust    | Sujay |   60800 |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE transfer (sacc int,dacc int,amt float) BEGIN declare tot float; select balance-amt into tot from users where noid=sacc;
+    -> if tot>=0 then update users set balance=balance-amt where noid=sacc; update users set balance=balance+amt where noid=dacc; end if; END//
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DELIMITER ;
+mysql> call trans1(58,67,5500);
+mysql> call transfer(58,67,5500);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> select * from users;
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| name         | gender | dob        | email                    | phone      | aadhar      | noid | status | desig   | passw | balance |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+| Airtel       | trans  | 2020-07-26 | Airtel@gmail.com         | 00000000   | 0000000     |   58 | active | cust    | 0000  |  244500 |
+| Airtel       | male   | 2020-07-27 | airtel@gmail.com         | 000000000  | 00000000    |   64 | active | cust    | 0000  |  250000 |
+| Riyaz Sayyad | Male   | 17/12/1999 | code3alphadown@gmail.com | 7620386192 | 56698248855 |   57 | active | Manager | R1212 |    NULL |
+| Anita        | female | 1997-06-05 | anita@gmail.com          | 8855667744 | 8855667744  |   66 | active | cashier | Anita |  250000 |
+| Sujay Dhawak | male   | 1999-07-15 | sujay@gmail.com          | 9875364782 | 9875364782  |   67 | active | cust    | Sujay |   66300 |
++--------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+-------+---------+
+5 rows in set (0.00 sec)
+
+//i later changed now() to curdate() as it was also taking time which was getting harder to call
+
+
