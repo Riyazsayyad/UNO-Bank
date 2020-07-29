@@ -150,14 +150,16 @@ if(session.getAttribute("name")!=null)
 						<input class="input100" type="text" name="aadhar" placeholder="Aadhar number" required>
 						<span class="focus-input100"></span>
 					</div>
-					&nbsp;
-					<select class="browser-default custom-select custom-select-lg mb-3" name="desig" required>
+					<div class="wrap-input100 validate-input" data-validate="Username is required">
+						<span class="label-input100">Special mark on body</span>
+						<input class="input100" type="text" name="ans" placeholder="Security Question" max="100"  required autocomplete="off" autocapitalize="off" accept="small">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="focus-input100"></span>
+					</div>
+					<input class="browser-default custom-select custom-select-lg mb-3" name="desig"  value="cust" type="hidden"  required>
 					 
 					 
-					  <option value="cust"  >Customer</option>
 					  
-					
-					</select>
 					
 					
 					
@@ -201,10 +203,7 @@ if(session.getAttribute("name")!=null)
 						</div>
 						</form>
 
-						<a href="Login.jsp" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-							Sign in
-							<i class="fa fa-long-arrow-right m-l-5"></i>
-						</a>
+						
   
 					</div>
 				 

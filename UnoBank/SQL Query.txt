@@ -112,5 +112,54 @@ mysql> select * from users;
 5 rows in set (0.00 sec)
 
 //i later changed now() to curdate() as it was also taking time which was getting harder to call
+mysql> alter table users  add column ans varchar(100);
+Query OK, 0 rows affected (6.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
+mysql> select * from users;
++----------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+----------+----------+------+
+| name           | gender | dob        | email                    | phone      | aadhar      | noid | status | desig   | passw    | balance  | ans  |
++----------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+----------+----------+------+
+| Airtel         | trans  | 2020-07-26 | Airtel@gmail.com         | 00000000   | 0000000     |   58 | active | cust    | 0000     |   249500 | NULL |
+| Maha vitivaran | male   | 2020-07-29 | maha@gmail.com           | 2222222    | 2222222     |   68 | active | cust    | Maha     |    11000 | NULL |
+| Vodafone       | male   | 2020-07-29 | vodafone@gmail.com       | 44444444   | 44444444    |   69 | active | cust    | Vodafone |    10000 | NULL |
+| dum            | male   | 2020-07-31 | dum@gmal.com             | 4554       | 4554        |   71 | active | cust    | 333      |     5000 | NULL |
+| Dishtv         | male   | 2020-07-29 | dishtv@gmail.com         | 6666666    | 6666666     |   70 | active | cust    | Dishtv   |    24200 | NULL |
+| Riyaz Sayyad   | Male   | 17/12/1999 | code3alphadown@gmail.com | 7620386192 | 56698248855 |   57 | active | Manager | R1212    | 10004999 | NULL |
+| Anita          | female | 1997-06-05 | anita@gmail.com          | 8855667744 | 8855667744  |   66 | active | cashier | Anita    |   250000 | NULL |
+| Sujay Dhawak   | male   | 1999-07-15 | sujay@gmail.com          | 9875364782 | 9875364782  |   67 | active | cust    | 1212     |    65500 | NULL |
++----------------+--------+------------+--------------------------+------------+-------------+------+--------+---------+----------+----------+------+
+8 rows in set (0.00 sec)
+
+mysql> update users set ans ='left leg' where noid=58;
+Query OK, 1 row affected (0.34 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=68;
+Query OK, 1 row affected (0.22 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=69;
+Query OK, 1 row affected (0.26 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=71;
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=70;
+Query OK, 1 row affected (0.31 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=57;
+Query OK, 1 row affected (0.25 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=66;
+Query OK, 1 row affected (0.54 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update users set ans ='left leg' where noid=67;
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 

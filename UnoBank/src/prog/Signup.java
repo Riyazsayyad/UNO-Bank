@@ -39,7 +39,7 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String nm,Em,Psw,Mob,ge,db,aa,de;
+		String nm,Em,Psw,Mob,ge,db,aa,de,an;
 		nm=request.getParameter("name");
 		Em=request.getParameter("email");
 		Psw=request.getParameter("passw");
@@ -48,6 +48,7 @@ public class Signup extends HttpServlet {
 		db=request.getParameter("dob");
 		aa=request.getParameter("aadhar");
 		de=request.getParameter("desig");
+		an=request.getParameter("ans");
 		Connection con;
 		PreparedStatement pst;
 		ResultSet rs;
@@ -56,7 +57,7 @@ public class Signup extends HttpServlet {
 		{
 			DBConnector dbc = new DBConnector();
     		con=dbc.getDbconnection();		
-    		pst=con.prepareStatement("insert into users (name,gender,dob,email,phone,aadhar,desig,passw,balance) values(?,?,?,?,?,?,?,?,5000);");
+    		pst=con.prepareStatement("insert into users (name,gender,dob,email,phone,aadhar,desig,passw,balance,ans) values(?,?,?,?,?,?,?,?,5000,?);");
 			pst.setString(1, nm);
 			pst.setString(2, ge);
 			pst.setString(3, db);
@@ -65,6 +66,7 @@ public class Signup extends HttpServlet {
 			pst.setString(6, aa);
 			pst.setString(7, de);
 			pst.setString(8, Psw);
+			pst.setString(9, an);
 		    pst.executeUpdate();
 		 	
 			

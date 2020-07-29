@@ -160,7 +160,13 @@ if(session.getAttribute("name")!=null)
 					
 					</select>
 					
-					
+					<div class="wrap-input100 validate-input" data-validate="Username is required">
+						<span class="label-input100">Special mark on body</span>
+						<input class="input100" type="text" name="ans" placeholder="Security Question" max="100"  required>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="focus-input100"></span>
+					</div>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
@@ -212,10 +218,8 @@ if(session.getAttribute("name")!=null)
 						</div>
 						</form>
 
-						<a href="Login.jsp" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-							Sign in
-							<i class="fa fa-long-arrow-right m-l-5"></i>
-						</a>
+						
+						
   
 					</div>
 				 
